@@ -1,0 +1,41 @@
+--Color week off days based on date column header if header column day is not sat/Sun then make it red
+
+Sub Button1_Click()
+
+    'WEEKDAY returns a serial number from 1 (Sun) to 7 (Sat)
+    Dim sAdd As String
+    Dim headerRowNo As Integer
+    Dim timesheetStartField As String
+    
+    headerRowNo = 3
+    timesheetStartField = "E4"
+    sAdd = ActiveSheet.Range(timesheetStartField).SpecialCells(xlCellTypeLastCell).Address
+    ActiveSheet.Range(timesheetStartField & ":" & sAdd).Select
+    
+    'CurrentDay = "=Text(Weekday(Now), ""ddd"")"
+    'MsgBox CurrentDay, vbInformation, "Current Day"
+    
+    For Each myCell In ActiveSheet.Range(timesheetStartField & ":" & sAdd)
+        'c = c + 1
+        'myCell.Address & ":" & myCell.Row
+        myCell.Interior.Color = RGB(255, 255, 255)
+        
+        If IsEmpty(myCell.Value) Then
+          If ActiveSheet.Range("C" & myCell.Row).Value = "Two" And Weekday(Cells(headerRowNo, myCell.Column)) <> 1 And Weekday(Cells(headerRowNo, myCell.Column)) <> 7 Then
+              myCell.Interior.Color = RGB(255, 0, 0)'Red
+           ElseIf ActiveSheet.Range("C" & myCell.Row).Value = "One" And Weekday(Cells(headerRowNo, myCell.Column)) <> 1 Then
+              myCell.Interior.Color = RGB(255, 0, 0) 
+          End If
+        ElseIf myCell.Value < 8 Then
+            myCell.Interior.Color = RGB(255, 255, 0) 'Green
+        End If
+        
+    Next myCell
+ 
+End Sub
+
+							
+							
+ 		
+							
+
