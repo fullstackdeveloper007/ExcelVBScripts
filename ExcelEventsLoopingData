@@ -1,0 +1,29 @@
+//1. Work Book Open Event,below event will be called while opening the excel file. 
+
+Private Sub Workbook_Open() 
+    Method1  //Method braces not required
+    Method2
+End Sub
+
+//2. Below function will check two sheets and match a column data with other sheet
+
+Sub ValidateTimeSheetHours()
+
+    Dim maxRowA, maxRowT As Long
+    Dim tsnM, tsnTs As Worksheet
+    
+    maxRowA = UBound(Sheets("Timesheet Not Matched").UsedRange.Value2, 1) //Check for max row
+    maxRowT = UBound(Sheets("Payroll Timesheet").UsedRange.Value2, 1)
+    
+    Set tsnM = Sheets("Sheet2")
+    Set tsnTs = Sheets("Sheet1")
+   
+    For i = 1 To maxRowA
+        For j = 1 To maxRowT
+            If (tsnM.Cells(i, 2) = tsnTs.Cells(j, 2)) Then
+                tsnTs.Cells(j, 3).Interior.Color = RGB(242, 220, 219)
+            End If
+        Next
+    Next
+    
+End Sub
